@@ -1,0 +1,38 @@
+package com.kenschool.Model_POJOs;
+
+import lombok.Data;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
+//        import java.util.Date;
+
+@Data
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public class BaseEntity {
+
+    @CreatedDate // Date will be mapped from the db server by the spring data jpa
+    @Column(name = "created_at", updatable = false) // simply given the name attribute
+    private LocalDateTime createdAt;
+
+    @CreatedBy //here the value is inserted by auditingImpl.java
+    @Column(updatable = false)
+    // When updating like fetching the values we don't really need this we only fetch fields except this so we given this
+    private String createdBy;
+
+    @LastModifiedDate // Date will be mapped from the db server by the spring data jpa
+    @Column(insertable = false)
+    // in inserting we don't need this field to be inserted ie,this will be null so give this
+    private LocalDateTime updatedAt;
+
+    @LastModifiedBy //here the value is inserted by auditingImpl.java
+    @Column(insertable = false) //in inserting we don't need this field to be inserted ie,this will be null so give this
+    private String updatedBy;
+}

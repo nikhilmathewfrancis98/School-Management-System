@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header Part</title>
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+    <!--    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>-->
+
+</head>
+<body>
+<!--Pop up Message box for logout confirmation-->
+
+<!-- Message box ends here -->
+
+<header class="fixed-top" id="site-header">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" th:href="@{/home}"><i class="fas fa-graduation-cap"></i>Ken International School
+            </a>
+
+
+            <button aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler collapsed" data-bs-target="#navbarScroll" data-bs-toggle="collapse"
+                    type="button">
+                <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll">
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a aria-current="page" class="home nav-link"
+                           th:classappend="${#httpServletRequest.getRequestURI() == '/home'|| #httpServletRequest.getRequestURI() == '/' ? 'active' : ' '}"
+                           th:href="@{/home}"><i class="fa-solid fa-house"><span
+                                style="margin-left:5px;">Home</span></i></a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="cour nav-link "
+                           th:classappend="${#httpServletRequest.getRequestURI() == '/courses'?'active':' '}"
+                           th:href="@{/courses}"><i class="fa-solid fa-book"><span
+                                style="margin-left:5px;">Courses</span></i></a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="cont nav-link "
+                           th:classappend="${#httpServletRequest.getRequestURI()=='/contact' ? 'active' : ' '}"
+                           th:href="@{/contact}"><i class="fa-solid fa-square-phone"><span style="margin-left:5px;">Contact</span></i></a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="nav-link"
+                           th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}"
+                           th:href="@{/login}"><i class="fa-solid fa-right-to-bracket"><span style="margin-left:5px;">Login</span></i></a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link"
+                           th:classappend="${#httpServletRequest.getRequestURI() == '/dashboard' ? 'active':''}"
+                           th:href="@{/dashboard}">Dashboard</a>
+                    </li>
+                    <button class="log-out" sec:authorize="isAuthenticated()"
+                            th:classappend="${#httpServletRequest.getRequestURI() == '/logout' ? 'active':''}">
+                        <li class="nav-item">
+                            <a class="nav-link"><i class="fa-solid fa-right-from-bracket"><span
+                                    style="margin-left:5px;">Logout</span></i></a>
+                        </li>
+                    </button>
+                </ul>
+            </div>
+            <!-- toggle switch for light and dark theme -->
+            <div class="cont-ser-position">
+                <nav class="navigation">
+                    <div class="theme-switch-wrapper">
+                        <label class="theme-switch" for="checkbox">
+                            <input id="checkbox" type="checkbox">
+                            <div class="mode-container">
+                                <i class="gg-sun"></i>
+                                <i class="gg-moon"></i>
+                            </div>
+                        </label>
+                    </div>
+                </nav>
+            </div>
+            <!-- //toggle switch for light and dark theme -->
+        </nav>
+    </div>
+</header>
+<script crossorigin="anonymous" src="https://kit.fontawesome.com/a304e7a40c.js"></script>
+
+</body>
+
+</html>

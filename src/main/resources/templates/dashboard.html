@@ -1,0 +1,252 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+Thymeleaf_SpringSecurity integration : https://www.thymeleaf.org/doc/articles/springsecurity.html
+-->
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Welcome to Ken International</title>
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Template CSS Style link -->
+    <link href="assets/css/style-starter.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/a304e7a40c.js"></script>
+</head>
+
+<body>
+
+<!-- header -->
+<div th:replace="header.html :: header">...</div>
+<!-- //header -->
+
+<!-- inner banner -->
+<section class="inner-banner py-5">
+    <div class="w3l-breadcrumb py-lg-5">
+        <div class="container pt-4 pb-sm-4">
+            <h4 class="inner-text-title pt-5">Dashboard</h4>
+            <ul class="breadcrumbs-custom-path">
+                <li><a th:href="@{/home}">Home</a></li>
+                <li class="active"><i class="fas fa-angle-right"></i>Dashboard</li>
+            </ul>
+        </div>
+    </div>
+
+</section>
+<!-- //inner banner -->
+
+<!-- Welcome block -->
+<section class="w3l-contact py-5" id="contact">
+    <div class="container py-md-5 py-4">
+        <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+            <h3 class="title-style" th:text="${'Welcome - ' + username}"></h3>
+            <p class="" th:text="${'You logged in as - ' + roles}"></p>
+        </div>
+    </div>
+
+    <!--This is the code for the Popup message for the logout confirmation -->
+    <div class="popup_box">
+        <i class="fas fa-exclamation"></i>
+        <h1>Do you really need to Logout!</h1>
+        <label>Are you sure to proceed?</label>
+        <div class="btns">
+            <a class="btn1" th:href="@{/dashboard}">Cancel</a>
+            <a class="btn2" th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
+    <!-- Pop up message ends here   -->
+</section>
+<!-- //Welcome block -->
+
+
+<!--The display Profile button-->
+<div class="container py-md-5 py-4">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row m-t-25">
+                <div class="col-sm-6 col-lg-3">
+                    <a th:href="@{/displayProfile}">
+                        <div class="overview-item overview-item--c4">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="fas fa-id-card"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>Profile</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- View Message Link block -->
+                <!-- We have given ROLE before admin bcoz we can see if we login the dashboard will show ROLE_ADMIN USER default so to detect that we done like this               -->
+                <div class="col-sm-6 col-lg-3" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/displayMessages}">
+                        <div class="overview-item overview-item--c3">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="fas fa-envelope-open-text"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>Messages</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!--   Adding the Classes and Courses buttons for the admin role only                              -->
+                <div class="col-sm-6 col-lg-3" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/admin/displayClasses}">
+                        <div class="overview-item overview-item--c1">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="fas fa-envelope-open-text"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>Classes</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-lg-3" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/admin/displayCourses}">
+                        <div class="overview-item overview-item--c2">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="fas fa-envelope-open-text"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>Courses</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer block -->
+<div th:replace="footer.html :: footer">...</div>
+<!-- //footer block -->
+
+<!-- Js scripts -->
+<!-- move top -->
+<button id="movetop" onclick="topFunction()" title="Go to top">
+    <span aria-hidden="true" class="fas fa-level-up-alt"></span>
+</button>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<!-- This is the code for the Popup message  when logout initiated -->
+<script>
+      $(document).ready(function(){
+        $('.log-out').click(function(){
+          $('.popup_box').css("display", "block");
+        });
+        $('.btn1').click(function(){
+          $('.popup_box').css("display", "none");
+        });
+     $('.btn2').click(function(){
+          $('.popup_box').css("display", "none");
+        });
+      });
+
+
+</script>
+<script>
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("movetop").style.display = "block";
+            } else {
+                document.getElementById("movetop").style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+</script>
+<!-- //move top -->
+
+<!-- common jquery plugin -->
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+<!-- //common jquery plugin -->
+
+<!-- theme switch js (light and dark)-->
+<script src="assets/js/theme-change.js"></script>
+<!-- //theme switch js (light and dark)-->
+
+<!-- MENU-JS -->
+<script>
+        $(window).on("scroll", function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 80) {
+                $("#site-header").addClass("nav-fixed");
+            } else {
+                $("#site-header").removeClass("nav-fixed");
+            }
+        });
+
+        //Main navigation Active Class Add Remove
+        $(".navbar-toggler").on("click", function () {
+            $("header").toggleClass("active");
+        });
+        $(document).on("ready", function () {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+            $(window).on("resize", function () {
+                if ($(window).width() > 991) {
+                    $("header").removeClass("active");
+                }
+            });
+        });
+
+</script>
+<!-- //MENU-JS -->
+
+<!-- disable body scroll which navbar is in active -->
+<script>
+        $(function () {
+            $('.navbar-toggler').click(function () {
+                $('body').toggleClass('noscroll');
+            })
+        });
+
+</script>
+<!-- //disable body scroll which navbar is in active -->
+
+<!-- bootstrap -->
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- //bootstrap -->
+<!-- //Js scripts -->
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+-->
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>KenInternational School - Best Educational Institute for your Child</title>
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Template CSS Style link -->
+    <link href="/assets/css/style-starter.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- header -->
+<div th:replace="header.html :: header">...</div>
+<!-- //header -->
+
+<!-- inner banner -->
+<section class="inner-banner py-5">
+    <div class="w3l-breadcrumb py-lg-5">
+        <div class="container pt-4 pb-sm-4">
+            <h4 class="inner-text-title pt-5">Profile</h4>
+            <ul class="breadcrumbs-custom-path">
+                <li><a th:href="@{/home}">Home</a></li>
+                <li class="active"><i class="fas fa-angle-right"></i>Profile</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- //inner banner -->
+
+<!-- profile block -->
+<section class="w3l-contact py-5" id="contact">
+    <div class="container py-md-5 py-4">
+        <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+            <h3 class="title-style">My Profile</h3>
+        </div>
+        <div class="row login-block">
+            <div class="col-md-7 login-center">
+                <ul>
+                    <li class="alert alert-danger" role="alert" th:each="error : ${#fields.errors('editprofile.*')}"
+                        th:text="${error}"/>
+                </ul>
+                <form class="signin-form" enctype="multipart/form-data" method="post" th:action="@{/updateProfile}"
+                      th:object="${editprofile}">
+                    <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+                        <h5 class="footer-title-29">Personal Details</h5>
+                        <div class="col-sm-6 profile_Pic">
+                            <!--                            <img th:src="*{'data:image/*;base64,'+image}" alt="" />-->
+                            <img id="thumbnail" th:src="*{'data:image/jpg;base64,'+profilePic}" width="200"/>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="input-grids">
+                        <label class="control-label" for="name">Name:</label>
+                        <input class="contact-input" id="name" th:field="*{name}" type="text"/>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="control-label" for="mobileNumber">Mobile Number:</label>
+                                <input class="contact-input" id="mobileNumber" th:field="*{mobileNumber}"
+                                       type="text"/>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label" for="email">Email:</label>
+                                <input class="contact-input" id="email" th:field="*{email}"
+                                       type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+                        <h5 class="footer-title-29">Address Details</h5>
+                    </div>
+                    <div class="input-grids">
+                        <label class="control-label" for="address1">Address Line 1:</label>
+                        <input class="contact-input" id="address1" th:field="*{address1}" type="text"/>
+                        <label for="address2">Address Line 2:</label>
+                        <input class="contact-input" id="address2" th:field="*{address2}" type="text"/>
+                        <label class="control-label" for="city">City:</label>
+                        <input class="contact-input" id="city" th:field="*{city}" type="text"/>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="control-label" for="state">State:</label>
+                                <input class="contact-input" id="state" th:field="*{state}"
+                                       type="text"/>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label" for="zipCode">Zip Code:</label>
+                                <input class="contact-input" id="zipCode" th:field="*{zipCode}"
+                                       type="text"/>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label" for="fileImage">Upload image
+                                </label>
+                                <input accept="image/jpeg" id="fileImage" name="fileImage" type="file"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 login-center text-start">
+                        <button class="btn btn-style btn-style-3 text-left">Update</button>
+                        <a class="new-user text-right" th:href="@{/dashboard}">
+                            <button class="btn btn-style btn-style-3 text-left" th:formaction="@{/displayProfile}">
+                                BACK
+                            </button>
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- //profile block -->
+
+<!-- footer block -->
+<div th:replace="footer.html :: footer">...</div>
+<!-- //footer block -->
+
+<!-- Js scripts -->
+<!-- move top -->
+<button id="movetop" onclick="topFunction()" title="Go to top">
+    <span aria-hidden="true" class="fas fa-level-up-alt"></span>
+</button>
+<script>
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+<!-- Code for the Profile pic Thumbnail       -->
+function showImageThumbnail(fileInput) {
+    file = fileInput.files[0];
+    reader = new FileReader();
+    reader.onload = function(e) {
+        $('#thumbnail').attr('src', e.target.result);
+    };
+    reader.readAsDataURL(file);
+}
+<!--The code for the image thumbnail ends here-->
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("movetop").style.display = "block";
+            } else {
+                document.getElementById("movetop").style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+</script>
+<!-- //move top -->
+
+<!-- common jquery plugin -->
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<!-- //common jquery plugin -->
+
+<!-- theme switch js (light and dark)-->
+<script src="/assets/js/theme-change.js"></script>
+<!-- //theme switch js (light and dark)-->
+
+<!-- MENU-JS -->
+<script>
+        $(window).on("scroll", function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 80) {
+                $("#site-header").addClass("nav-fixed");
+            } else {
+                $("#site-header").removeClass("nav-fixed");
+            }
+        });
+
+        //Main navigation Active Class Add Remove
+        $(".navbar-toggler").on("click", function () {
+            $("header").toggleClass("active");
+        });
+        $(document).on("ready", function () {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+            $(window).on("resize", function () {
+                if ($(window).width() > 991) {
+                    $("header").removeClass("active");
+                }
+            });
+        });
+
+</script>
+<!-- //MENU-JS -->
+
+<!-- disable body scroll which navbar is in active -->
+<script>
+        $(function () {
+            $('.navbar-toggler').click(function () {
+                $('body').toggleClass('noscroll');
+            })
+        });
+         $("#fileImage").change(function(){
+        showImageThumbnail(this);
+    });
+
+</script>
+<!-- //disable body scroll which navbar is in active -->
+
+<!-- bootstrap -->
+<script src="/assets/js/bootstrap.min.js"></script>
+<!-- //bootstrap -->
+<!-- //Js scripts -->
+</body>
+
+</html>
