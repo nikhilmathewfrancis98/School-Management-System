@@ -2,10 +2,14 @@ package com.kenschool.Controller;
 
 import com.kenschool.Error.Contact_ErrorController;
 import com.kenschool.Model_POJOs.NewPOJOContactEntity;
+import com.kenschool.Repository.NewContactRepository;
 import com.kenschool.Services.NewContactServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -30,6 +34,7 @@ public class ContactController extends Thread {
     private NewContactServices contactServices;
     @Autowired(required = false)
     private Contact_ErrorController contact_errorController;
+
 
     // Constructor Wiring is done
 //    @Autowired
@@ -88,18 +93,30 @@ public class ContactController extends Thread {
         }
     }
 
-    @RequestMapping(value = "/displayMessages")
-    public ModelAndView DisplayMessages() {
-        List<NewPOJOContactEntity> contactMsgs = contactServices.findOpenMessages();
-        return new ModelAndView("Messages.html").addObject("contactMsgs", contactMsgs);
+    @RequestMapping(value = "/displayMessages/page/{page_no}")
+    public ModelAndView DisplayMessages(@PathVariable("page_no") int pageNo,@RequestParam("sortField") String SortField,
+                                        @RequestParam("sortDir") String SortDir,Model model) {
+        ModelAndView modelAndView=new ModelAndView("Messages.html");
+
+        Page<NewPOJOContactEntity> contactMsgs = contactServices.findOpenMessages(pageNo,SortField,SortDir);
+        List<NewPOJOContactEntity> contactPages=contactMsgs.getContent();
+        modelAndView.addObject("contactMsgs", contactPages);
+        model.addAttribute("totalPages", contactMsgs.getTotalPages());
+        model.addAttribute("totalMsgs", contactMsgs.getTotalElements());
+        model.addAttribute("sortField",SortField);
+        model.addAttribute("sortDir",SortDir);
+        model.addAttribute("currentPage",pageNo);
+        model.addAttribute("reverseSortDir",(SortDir.equals("desc")) ? "asc" :   "desc");
+        return modelAndView;
     }
 
-    @RequestMapping(value = "/closeMsg", method = RequestMethod.GET)
-    public ModelAndView UpdateMessage(@RequestParam(name = "id") int ContactId) {
+    @RequestMapping(value = "/closeMsg/{id}", method = RequestMethod.GET)
+    public String UpdateMessage(@PathVariable(name = "id") int ContactId) {
 //        String userName= SecurityContextHolder.getContext().getAuthentication().getName();
 //        log.info(String.valueOf(ContactId));
         contactServices.UpdateMessageStatus(ContactId);
-        return new ModelAndView("Messages.html");
+//        return "redirect:/displayMessages/page/' + ${currentPage}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}";
+        return "redirect:/displayMessages/page/1?sortField=name&sortDir=desc";
     }
 }
 //  return new ModelAndView("redirect:/errorCtrl?var1=pojoContact&var2=123"); // Tried this query string by sending the query params we cannot send the object reference through query params

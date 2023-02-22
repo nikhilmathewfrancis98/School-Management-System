@@ -25,6 +25,10 @@ public class DashboardController {
         model.addAttribute("username", personDetails.getName());
         model.addAttribute("roles", authentication.getAuthorities().toString());
         httpSession.setAttribute("loggedInPerson", personDetails);
+        if (null!=personDetails.getKenClass()&& null
+        !=personDetails.getKenClass().getClassName()){
+            model.addAttribute("enrolledClass",personDetails.getKenClass().getClassName());
+        }
         // Here am going to give a RunTime exception to show the customized error page
 //      throw   new RuntimeException("Hey Something is wrong with this request"); // This is working
         return "dashboard.html";

@@ -14,6 +14,30 @@ import javax.validation.constraints.Size;
 @Data
 @Component
 @Table(name = "contact_msg") // This is not required if the class name and the table name is same
+// Code for adding the Named and NamedNative queries
+@SqlResultSetMappings({
+        @SqlResultSetMapping(name = "SqlResultSetMapping.count", columns = @ColumnResult(name = "cnt"))
+})
+@NamedQueries({
+        @NamedQuery(name = "NewPOJOContactEntity.findOpenMsgs",
+                query = "SELECT c FROM NewPOJOContactEntity c WHERE c.status = :status"),
+        @NamedQuery(name = "NewPOJOContactEntity.updateMsgStatus",
+                query = "UPDATE NewPOJOContactEntity c SET c.status = ?1 WHERE c.contactId = ?2")
+})
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "NewPOJOContactEntity.findOpenMsgsNative",
+                query = "SELECT * FROM contact_msg  WHERE status = :status"
+                ,resultClass = NewPOJOContactEntity.class),
+        @NamedNativeQuery(name = "NewPOJOContactEntity.findOpenMsgsNative.count",
+                query = "select count(*) as cnt from contact_msg  where status = :status",
+                resultSetMapping = "SqlResultSetMapping.count"),
+        /*Spring Data JPA doesn’t support dynamic sorting for native queries.
+        Doing that would require Spring Data to analyze the provided statement and generate
+        the ORDER BY clause in the database-specific dialect. This would be a very complex operation
+        and is currently not supported by Spring Data JPA.*/
+        @NamedNativeQuery(name = "NewPOJOContactEntity.updateMsgStatusNative",
+                query = "UPDATE contact_msg  SET status = ?1 WHERE contact_id = ?2")
+})
 public class NewPOJOContactEntity extends BaseEntity {
     // Note : here we are extending the BaseEntity so it also has some fields that we use so that class also need to be considered so add a annotation there
 

@@ -3,13 +3,18 @@ package com.kenschool.Model_POJOs;
 import com.kenschool.ValidationAnnotation.FiledValueMatch;
 import com.kenschool.ValidationAnnotation.PasswordValidator;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Slf4j
 @Entity
 @Table(name = "person")
@@ -78,4 +83,10 @@ public class PersonPojo extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "class_id", referencedColumnName = "classId", nullable = true)
     private ClassPojo kenClass;
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+    @JoinTable(name = "person_courses",
+    joinColumns = {@JoinColumn(name = "person_id",referencedColumnName = "personId")},
+    inverseJoinColumns = {@JoinColumn(name = "course_id",referencedColumnName = "courseId")})
+    Set<Courses> courses=new HashSet<>();
 }

@@ -48,6 +48,7 @@ Thymeleaf_SpringSecurity integration : https://www.thymeleaf.org/doc/articles/sp
         <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
             <h3 class="title-style" th:text="${'Welcome - ' + username}"></h3>
             <p class="" th:text="${'You logged in as - ' + roles}"></p>
+            <p class="" th:if="${!#strings.isEmpty(enrolledClass)}" th:text="${'You are in class - '+enrolledClass}"></p>
         </div>
     </div>
 
@@ -90,7 +91,7 @@ Thymeleaf_SpringSecurity integration : https://www.thymeleaf.org/doc/articles/sp
                 <!-- View Message Link block -->
                 <!-- We have given ROLE before admin bcoz we can see if we login the dashboard will show ROLE_ADMIN USER default so to detect that we done like this               -->
                 <div class="col-sm-6 col-lg-3" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/displayMessages}">
+                    <a th:href="@{/displayMessages/page/1?sortField=name&sortDir=asc}">
                         <div class="overview-item overview-item--c3">
                             <div class="overview__inner">
                                 <div class="overview-box clearfix">
@@ -124,6 +125,23 @@ Thymeleaf_SpringSecurity integration : https://www.thymeleaf.org/doc/articles/sp
                 </div>
                 <div class="col-sm-6 col-lg-3" sec:authorize="hasRole('ROLE_ADMIN')">
                     <a th:href="@{/admin/displayCourses}">
+                        <div class="overview-item overview-item--c2">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="fas fa-envelope-open-text"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>Courses</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+<!--  ``````````````````````````````````````````````````````` -->
+                <div class="col-sm-6 col-lg-3" sec:authorize="hasRole('ROLE_STUDENT')">
+                    <a th:href="@{/student/displayCourses}">
                         <div class="overview-item overview-item--c2">
                             <div class="overview__inner">
                                 <div class="overview-box clearfix">
