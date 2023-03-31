@@ -1,5 +1,6 @@
 package com.kenschool.Model_POJOs;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
@@ -51,6 +52,7 @@ public class NewPOJOContactEntity extends BaseEntity {
     // All the below fields are exactly same as the db entities so no need of @Column
     @NotBlank(message = "Name must not be blank")
     @Size(min = 3, message = "Name must be at least 3 characters long")
+    @JsonProperty(value = "Person_name") // This annot helps to change the name of the field when sending the Json Response
     private String name;
 
     @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must contain 10 digits ")

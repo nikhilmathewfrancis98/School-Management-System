@@ -84,9 +84,11 @@ public class ProjectSecurityConfig {
         // Since /holidays req contains a uri path variable we need to add /** followed by the request
         // We can give authenticated() in palace of permitAll() for any of the matches so that a req to that API page will show login by spring Security
         // This csrf disable is not required if we are using the th:action , required if we are using the normal action like in react or something
-        http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/public/register").and().
+        http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/public/**").
+                ignoringAntMatchers("/api/**").and().
                 authorizeRequests().mvcMatchers("/home").permitAll()
-                .mvcMatchers("/displayProfile").authenticated()
+                .mvcMatchers("/displayProfile").authenticated().
+                mvcMatchers("/api/**").authenticated()
                 .mvcMatchers("/updateProfile").authenticated()
                 .mvcMatchers("/EditProfile").authenticated()
                 .mvcMatchers("/displayMessages/**").hasRole("ADMIN").

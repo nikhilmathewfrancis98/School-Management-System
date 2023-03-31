@@ -75,8 +75,9 @@ public class ContactController extends Thread {
 //    } // We commented this because we are trying to use the @Valid and leveraging the POJO with the  view
 
     // If we give @RequestMapping we need to specify the requestmethod.POST or GET
+//    Instead of Errors we can also use BindingResult object also
     @PostMapping(value = "/saveMsg")
-    public String SaveContactFeedback(@Valid @ModelAttribute("contact") NewPOJOContactEntity contact, Errors errors) {
+    public String SaveContactFeedback(@Valid @ModelAttribute("contact") NewPOJOContactEntity contacts, Errors errors) {
 //        log.info(pojoContact.toString());
 //        log.info(String.valueOf(contact.hashCode()+"\n"+pojoContact.hashCode()));
         if (errors.hasErrors()) {
@@ -85,7 +86,7 @@ public class ContactController extends Thread {
         } else {
             //Now when we enter details 2 times the count will be 2 ie same instance of service class is used
             // But with the the @RequestScope when ever new request comes new bean will be created
-            contactServices.SaveMessageContacts(contact);
+            contactServices.SaveMessageContacts(contacts);
 //           contactServices.setCounter(contactServices.getCounter()+1);
 //            log.info("Number of times the Contact form is submitted : "+contactServices.getCounter());
 //           log.info("No Errors");

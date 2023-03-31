@@ -61,7 +61,7 @@ public class NewContactServices {
 //        SortDir.equals("asc")?Sort.by(SortField).ascending():Sort.by(SortField).descending()
         Pageable pageable= PageRequest.of(pageNo-1,pageSize,sort1);
 
-        Page<NewPOJOContactEntity> contactmsgs = contactRepository.findOpenMsgs(KenSchoolConstants.OPEN,pageable);
+        Page<NewPOJOContactEntity> contactmsgs = contactRepository.findStatus(KenSchoolConstants.OPEN,pageable);
         return contactmsgs;
     }
 
@@ -87,7 +87,7 @@ public class NewContactServices {
 //        }
 
         boolean isUpdated = true;
-        int  UpdatedContactEntity= contactRepository.updateMsgStatus(KenSchoolConstants.CLOSE,contactId);
+        int  UpdatedContactEntity= contactRepository.updateStatus(KenSchoolConstants.CLOSE,contactId);
         if ( UpdatedContactEntity > 0) {
             return isUpdated;
         } else {

@@ -15,10 +15,18 @@ as an interceptor of exceptions thrown by methods annotated with @RequestMapping
 public class GlobalExceptionController {
     @ExceptionHandler(Exception.class)
     public ModelAndView GlobalErrorPage(Exception e) {
+        String errorMsg=null;
         ModelAndView errorPage = new ModelAndView();
         errorPage.setViewName("error.html");
+        if(e.getMessage()!=null){
+            errorMsg=e.getMessage();
+        } else if (e.getCause()!=null) {
+            errorMsg=e.getCause().toString();
+        }else if(e!=null){
+            errorMsg=e.toString();
+        }
         // Always we are adding the attributes to Model class no we added the error message to modelandview
-        errorPage.addObject("errormsg", e.getMessage());
+        errorPage.addObject("errormsg", errorMsg);
         return errorPage;
     }
 }
