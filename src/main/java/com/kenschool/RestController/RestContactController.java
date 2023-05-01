@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController // If we are using the @RestController we don't need to use the @ResponseBody for each Method
 //@Controller // For this annot we need the @ResponseBody
-@RequestMapping(path = "/api/contact",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+//@RequestMapping(path = "/api/contact",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+@RequestMapping(path = "/api/contact",produces = {MediaType.APPLICATION_JSON_VALUE})
 // We added the produces attr inorder to produce 2 types of Responses XML and JSON as well That is this class can produce
 // These kind of data as the response. So add a dependency too im POM.xml
 @CrossOrigin(origins = "*")

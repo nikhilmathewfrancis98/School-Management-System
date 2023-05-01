@@ -75,7 +75,7 @@ public class EditProfile {
         person.getAddress().setProfilePic(ImageUtil.compressImage(file.getBytes()));
         personRepository.save(person);
         httpSession.setAttribute("loggedInPerson", person);
-        return "redirect:/dashboard";
+        return "redirect:/displayProfile";
     }
 
 

@@ -7,12 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@RepositoryRestResource(path = "courses")
 public interface NewContactRepository extends JpaRepository<NewPOJOContactEntity, Integer> {
     List<NewPOJOContactEntity> findByStatus(String open);
 //    @Query(value = "Select c from NewPOJOContactEntity c where c.status=?1") // Here we can use the =:status where this status is the argument

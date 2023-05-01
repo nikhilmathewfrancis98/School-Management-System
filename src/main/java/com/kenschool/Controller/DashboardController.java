@@ -18,10 +18,15 @@ import javax.servlet.http.HttpSession;
 public class DashboardController {
     @Autowired
     PersonRepository personRepository;
-
+    private PersonPojo personDetails;
     @RequestMapping(value = "/dashboard", method = {RequestMethod.GET, RequestMethod.POST})
     public String ViewDashboard(Authentication authentication, Model model, HttpSession httpSession) {
-        PersonPojo personDetails = personRepository.getByemail(authentication.getName());
+       PersonPojo p=(PersonPojo) httpSession.getAttribute("loggedInPerson");
+       if (p!=null){
+           personDetails  = personRepository.getByemail(p.getEmail());
+       }else {
+           personDetails=personRepository.getByemail(authentication.getName());
+       }
         model.addAttribute("username", personDetails.getName());
         model.addAttribute("roles", authentication.getAuthorities().toString());
         httpSession.setAttribute("loggedInPerson", personDetails);

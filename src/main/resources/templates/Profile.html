@@ -50,11 +50,11 @@ Author URL: http://w3layouts.com
                     <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
                         <h5 class="footer-title-29">Personal Details</h5>
                     </div>
-                    <img alt="Display Picture" th:src="*{'data:image/jpg;base64,'+profilePic}"/>
+                    <img alt="Display Picture" th:src="*{'data:image/*;base64,'+profilePic}"/>
                     <div class="input-grids">
                         <label for="name">Name:</label>
-                        <input class="contact-input" id="name" readonly th:field="${profile.name}" type="text"
-                               value="${profile.name}"/>
+                        <input class="contact-input" id="name" readonly th:field="*{name}" type="text"
+                               value="*{name}"/>
                         <div class="row">
                             <div class="col-sm-6">
                                 <label for="mobileNumber">Mobile Number:</label>

@@ -54,7 +54,7 @@ public class ProjectSecurityConfig {
             return http.build();
         }*/
     @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // Permit All Requests inside the Web Application
        /* http.authorizeRequests().anyRequest().permitAll().
                 and().formLogin()
@@ -120,7 +120,7 @@ public class ProjectSecurityConfig {
 //    @Bean
 //    public InMemoryUserDetailsManager userDetailsService(){
 //        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        // In this code the withDefaultPasswordEncoder() is deprecated so fixed with another method that is person2......
+//        // In this code the withDefaultPasswordEncoder() is deprecated so fixed with another method that is person2.....
 //        UserDetails admin1= User.withDefaultPasswordEncoder().username("admin").
 //                password("admin@123").roles("ADMIN").build();
 //        UserDetails person1=User.builder().username("niko").password(encoder.encode("Nikhil@1998")).roles("USER")
